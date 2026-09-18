@@ -84,5 +84,14 @@ This feedback could later be used for evaluation and system improvement, but it 
 The initial use case focuses on PMs working with customer interviews, workshop notes, stakeholder interviews, and other discovery material.
 
 ## Product Hypothesis
-
 If Product Managers have one place to collect unstructured discovery information and AI can organize and retrieve relevant information with traceable source evidence, they can spend less time processing research while maintaining confidence in the insights used for product decisions.
+
+## Interactive Prototype
+
+A clickable prototype was created to explore the end-to-end product experience from uploading discovery material through AI-generated insights and source verification.
+
+**Prototype flow:**
+
+Upload → Processing → Discovery Overview → Ask AI → Loading → Answer → Evidence → Human Validation
+
+[View the interactive Figma prototype](https://www.figma.com/proto/cYwOFlbz4S3V1XFJJ4C2jM/AI-Product-Discovery-Assistant-%E2%80%94-MVP?node-id=7-2&p=f&viewport=514%2C162%2C0.28&t=ACTsLhdxgJbmpg8T-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=7%3A2&page-id=2%3A25)
