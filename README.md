@@ -98,3 +98,45 @@ Upload → Processing → Discovery Overview → Ask AI → Loading → Answer �
 
 ### Discovery Overview
 ![Discovery Overview](assets/discovery-overview.png)
+## Technical Architecture
+
+The system is designed to turn unstructured discovery material—such as customer interviews, transcripts, PDFs, workshop notes, and research documents—into information that Product Managers can search, verify, and use for product decisions.
+
+![Technical Architecture](assets/technical-architecture.png)
+
+### Document Processing
+
+When a document is uploaded, the system:
+
+1. Extracts the text.
+2. Cleans and normalizes the extracted content while preserving its meaning and source traceability.
+3. Breaks the content into smaller chunks.
+4. Attaches metadata such as source, project, document location, version, and access permissions.
+5. Creates embeddings representing the semantic meaning of the chunks.
+6. Indexes the content for semantic retrieval.
+
+Structured application data—such as users, projects, document records, permissions, processing status, and validation feedback—is managed separately from the vector retrieval layer.
+
+### RAG Question & Answer Flow
+
+When a Product Manager asks a question, the system first verifies the user's identity and access permissions.
+
+The question is converted into an embedding and used to search only the content the user is authorized to access. Relevant chunks are retrieved and supplied to the LLM together with the user's question and grounding instructions.
+
+The LLM then synthesizes an answer using the retrieved evidence rather than relying only on its general model knowledge.
+
+### Trust and Verification
+
+The product does not treat an AI-generated answer as automatically correct.
+
+Answers are connected to source citations, exact supporting passages, and surrounding context so the Product Manager can verify whether the evidence actually supports the AI-generated insight.
+
+PMs can validate an insight as **Supported**, **Needs more research**, or **Not supported**.
+
+This creates signals that can be used to evaluate retrieval quality, grounding, citation accuracy, and hallucination risk.
+
+### Access Control
+
+Authorization is enforced before or during retrieval rather than after answer generation.
+
+Only content the user is permitted to access should be eligible for retrieval, helping prevent unauthorized information from entering the LLM context or appearing in an AI-generated response.
