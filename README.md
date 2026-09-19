@@ -95,3 +95,6 @@ A clickable prototype was created to explore the end-to-end product experience f
 Upload → Processing → Discovery Overview → Ask AI → Loading → Answer → Evidence → Human Validation
 
 [View the interactive Figma prototype](https://www.figma.com/proto/cYwOFlbz4S3V1XFJJ4C2jM/AI-Product-Discovery-Assistant-%E2%80%94-MVP?node-id=7-2&p=f&viewport=514%2C162%2C0.28&t=ACTsLhdxgJbmpg8T-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=7%3A2&page-id=2%3A25)
+
+### Discovery Overview
+![Discovery Overview](assets/discovery-overview.png)
