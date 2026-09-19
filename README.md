@@ -140,3 +140,41 @@ This creates signals that can be used to evaluate retrieval quality, grounding, 
 Authorization is enforced before or during retrieval rather than after answer generation.
 
 Only content the user is permitted to access should be eligible for retrieval, helping prevent unauthorized information from entering the LLM context or appearing in an AI-generated response.
+## Metrics & Evaluation
+
+Success should be measured across both **AI system quality** and **user value**. Improving a technical metric does not necessarily mean the product experience has improved.
+
+### AI Quality Metrics
+
+- **Retrieval Recall** — Are we finding the relevant evidence that exists in the source material?
+- **Retrieval Precision** — How much of the retrieved information is actually relevant?
+- **Answer Groundedness / Accuracy** — Is the answer supported by the retrieved evidence?
+- **Citation Accuracy** — Do citations point to the evidence that actually supports the answer?
+- **Unsupported Answer / Hallucination Rate** — How often does the system make claims that are not supported by the available evidence?
+
+### Product Value Metrics
+
+- **Active / Repeat Usage** — Are Product Managers returning to use the product for discovery work?
+- **Time Saved** — Does the product reduce the time required to review and structure discovery research?
+- **Successful Answer / Insight Rate** — Are PMs getting useful answers and insights from their discovery material?
+- **Human Validation Signals** — How often are insights marked Supported, Needs more research, or Not supported?
+
+### Evaluation Approach
+
+A golden evaluation dataset would include representative questions, expected evidence, and expected system behavior.
+
+The evaluation set should include:
+
+- Questions answerable from a single chunk
+- Questions requiring evidence across multiple chunks
+- Questions across different documents and sources
+- Questions where no supporting evidence exists
+- Questions testing access restrictions
+
+Evaluation should inspect the full pipeline:
+
+**Question → Retrieved Chunks → LLM Context → Answer → Citation**
+
+This helps distinguish retrieval failures from generation/grounding failures and citation-mapping failures.
+
+Changes to chunking, embeddings, Top-K, retrieval strategy, prompts, or models should be evaluated against the same test set to determine whether they improve the system without creating regressions elsewhere.
