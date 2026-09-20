@@ -178,3 +178,6 @@ Evaluation should inspect the full pipeline:
 This helps distinguish retrieval failures from generation/grounding failures and citation-mapping failures.
 
 Changes to chunking, embeddings, Top-K, retrieval strategy, prompts, or models should be evaluated against the same test set to determine whether they improve the system without creating regressions elsewhere.
+## Project Status
+
+This project is currently being developed as a portfolio case study exploring AI Product Management, RAG architecture, trust, evaluation, and enterprise AI considerations.
