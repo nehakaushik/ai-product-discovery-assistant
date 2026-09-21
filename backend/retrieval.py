@@ -25,7 +25,7 @@ with torch.no_grad():
 chunk_embeddings = chunk_output.last_hidden_state.mean(dim=1)
 
 
-def retrieve_evidence(question, top_k=2):
+def retrieve_evidence(question, top_k=2, relevance_threshold=0.30):
 
     encoded_question = tokenizer(
         question,
@@ -48,13 +48,15 @@ def retrieve_evidence(question, top_k=2):
 
     for index, score in zip(top_results.indices, top_results.values):
 
-        chunk = discovery_data[index.item()]
+        if score.item() >= relevance_threshold:
 
-        relevant_chunks.append({
-            "source": chunk["source"],
-            "location": chunk["location"],
-            "text": chunk["text"],
-            "similarity_score": round(score.item(), 3)
-        })
+            chunk = discovery_data[index.item()]
+
+            relevant_chunks.append({
+                "source": chunk["source"],
+                "location": chunk["location"],
+                "text": chunk["text"],
+                "similarity_score": round(score.item(), 3)
+            })
 
     return relevant_chunks
