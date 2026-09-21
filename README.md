@@ -214,6 +214,39 @@ Evaluation should inspect the full pipeline:
 This helps distinguish retrieval failures from generation/grounding failures and citation-mapping failures.
 
 Changes to chunking, embeddings, Top-K, retrieval strategy, prompts, or models should be evaluated against the same test set to determine whether they improve the system without creating regressions elsewhere.
+
+## Model Selection & Generation Evaluation
+
+The prototype uses a local language model so the RAG workflow can be tested without paid API usage.
+
+Rather than selecting a model based only on size, I compared several models against the same small generation evaluation set.
+
+| Model | Eval Result | Observation |
+|---|---:|---|
+| FLAN-T5-base | 2/4 | Correct on simple yes/no and abstention cases, but struggled with descriptive synthesis |
+| Qwen2.5-0.5B-Instruct | 3/4 | Best result on the current eval set with relatively lightweight local inference |
+| Qwen2.5-1.5B-Instruct | 2/4 | Larger model did not improve results on the current test cases and required more local resources |
+
+### Prototype Decision
+
+Qwen2.5-0.5B-Instruct is currently used for local generation because it provided the best quality/resource tradeoff among the models tested.
+
+This is a prototype decision, not a claim that Qwen2.5-0.5B is generally more capable than the other models. The evaluation set currently contains only four test cases and is not large enough for broad model-quality conclusions.
+
+A known failure remains: the model can struggle with some descriptive synthesis questions even when relevant evidence is provided.
+
+For a production system, model selection would use a larger representative evaluation dataset and compare additional factors such as:
+
+- grounded answer quality
+- hallucination and unsupported-claim rate
+- retrieval-to-generation consistency
+- latency
+- inference/API cost
+- context-window requirements
+- privacy and data-handling requirements
+- provider reliability and enterprise controls
+
+The prototype therefore treats model selection as an evaluation-driven product decision rather than assuming that a larger model will automatically perform better.
 ## Project Status
 
 This project is currently being developed as a portfolio case study exploring AI Product Management, RAG architecture, trust, evaluation, and enterprise AI considerations.
