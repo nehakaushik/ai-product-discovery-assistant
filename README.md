@@ -103,6 +103,42 @@ Upload → Processing → Discovery Overview → Ask AI → Loading → Answer �
 The system is designed to turn unstructured discovery material—such as customer interviews, transcripts, PDFs, workshop notes, and research documents—into information that Product Managers can search, verify, and use for product decisions.
 
 ![Technical Architecture](assets/technical-architecture.png)
+### Ask AI API
+`POST /questions`
+When a PM asks a question, the frontend sends the project ID and question to the backend.
+
+**Request**
+
+```json
+{
+  "project_id": "project_123",
+  "question": "What problems did customers report during onboarding?"
+}
+
+**Successful Response**
+
+```json
+{
+  "status": "answered",
+  "answer": "Customers reported that onboarding takes too long and that some instructions are unclear.",
+  "sources": [
+    {
+      "document": "Customer Interview - March 14",
+      "location": "Paragraph 18",
+      "excerpt": "The setup took much longer than I expected."
+    }
+  ]
+}
+
+**Insufficient Evidence Response**
+
+```json
+{
+  "status": "insufficient_evidence",
+  "answer": "I couldn't find enough information in the available discovery material to answer this question.",
+  "sources": []
+}
+```
 
 ### Document Processing
 
