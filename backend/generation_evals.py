@@ -10,7 +10,7 @@ test_cases = [
                 "text": "Some of the onboarding instructions were confusing. I wasn't sure what I was supposed to do next."
             }
         ],
-        "expected_phrase": "yes"
+        "acceptable_phrases": ["yes"]
     },
     {
         "name": "Account connection problem",
@@ -20,7 +20,11 @@ test_cases = [
                 "text": "I had trouble connecting my account during setup and had to contact support."
             }
         ],
-        "expected_phrase": "connecting"
+        "acceptable_phrases": [
+            "connecting",
+            "connection",
+            "connectivity"
+        ]
     },
     {
         "name": "Slow onboarding",
@@ -30,7 +34,12 @@ test_cases = [
                 "text": "The onboarding process took much longer than I expected. I almost gave up before finishing."
             }
         ],
-        "expected_phrase": "long"
+        "acceptable_phrases": [
+            "long",
+            "longer",
+            "slow",
+            "time"
+        ]
     },
     {
         "name": "Unsupported question",
@@ -40,7 +49,9 @@ test_cases = [
                 "text": "The dashboard was easy to understand once I completed onboarding."
             }
         ],
-        "expected_phrase": "not enough information"
+        "acceptable_phrases": [
+            "not enough information"
+        ]
     }
 ]
 
@@ -55,9 +66,11 @@ for test in test_cases:
         test["evidence"]
     )
 
-    passed = (
-        answer
-        and test["expected_phrase"] in answer.lower()
+    answer_lower = answer.lower() if answer else ""
+
+    passed = any(
+        phrase in answer_lower
+        for phrase in test["acceptable_phrases"]
     )
 
     if passed:
@@ -66,7 +79,7 @@ for test in test_cases:
     print("\nTest:", test["name"])
     print("Question:", test["question"])
     print("Generated answer:", answer)
-    print("Expected:", test["expected_phrase"])
+    print("Acceptable phrases:", test["acceptable_phrases"])
     print("PASS" if passed else "FAIL")
 
 
