@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from backend.retrieval import retrieve_evidence
+from backend.generator import generate_answer
 
 app = FastAPI()
 
@@ -26,8 +27,11 @@ def ask_question(request: QuestionRequest):
             "sources": []
         }
 
+    answer = generate_answer(request.question, relevant_chunks)
+
     return {
         "status": "answered",
         "question": request.question,
+        "answer": answer,
         "sources": relevant_chunks
     }
