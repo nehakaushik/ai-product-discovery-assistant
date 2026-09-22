@@ -165,3 +165,63 @@ A production system would require stronger validation for answer relevance, grou
 The AI Product Discovery Assistant should optimize for trustworthy assistance rather than maximum answer rate.
 
 When evidence is insufficient or an answer cannot be validated, the system should make uncertainty visible rather than present an unsupported answer as fact.
+## Decision 7: Distinguish AI failure states in the product
+
+### Problem
+
+Not every failed AI response has the same cause.
+
+During prototype testing, two different situations occurred:
+
+1. The retrieval system could not find sufficiently relevant evidence.
+2. Relevant evidence was found, but the generated answer failed validation.
+
+Treating both situations as "insufficient evidence" would be misleading because the second case actually contains research that may still be useful to the PM.
+
+### Decision
+
+Expose three distinct response states through the API:
+
+| Status | Meaning | Product Behavior |
+|---|---|---|
+| `answered` | Relevant evidence was found and the generated answer passed validation | Show the AI answer with supporting evidence |
+| `insufficient_evidence` | Retrieval could not find sufficiently relevant research | Do not generate an answer; suggest rephrasing the question or adding research |
+| `answer_validation_failed` | Relevant evidence exists, but the generated answer did not pass validation | Hide the rejected AI answer and allow the PM to review the evidence directly |
+
+### Why
+
+Different failure causes require different user experiences.
+
+If no relevant research exists, showing unrelated sources could create false confidence.
+
+If relevant research exists but generation fails, hiding that evidence would prevent the PM from using the underlying customer research independently.
+
+The product therefore separates:
+
+**evidence availability** from **AI answer reliability**.
+
+### Trust UX Principle
+
+A rejected AI answer should not be shown to the PM.
+
+For example, during testing the model generated:
+
+> Yes
+
+for the question:
+
+> What problem did the customer have during setup?
+
+Although relevant evidence had been retrieved, the generated answer did not actually answer the question.
+
+The system therefore returns:
+
+`answer_validation_failed`
+
+with the rejected answer removed and the relevant source evidence preserved for review.
+
+### Limitation
+
+The current validation logic uses simple deterministic rules and does not provide full groundedness or factual-consistency verification.
+
+A production implementation would require stronger evaluation and validation mechanisms before an answer is considered trustworthy.
