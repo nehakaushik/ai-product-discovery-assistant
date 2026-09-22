@@ -41,9 +41,10 @@ def ask_question(request: QuestionRequest):
     # produce an answer supported by that evidence.
     if not validate_answer(request.question, answer):
         return {
-            "status": "insufficient_evidence",
+            "status": "answer_validation_failed",
             "question": request.question,
-            "answer": "I couldn't find enough information in the available discovery material to answer this question.",
+            "answer": None,
+            "message": "I found potentially relevant research, but couldn't generate an answer that passed validation.",
             "sources": relevant_chunks
         }
 
