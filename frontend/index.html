@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Product Discovery Assistant</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="brand">AI Product Discovery Assistant</div>
+      <div class="prototype">Interactive prototype</div>
+    </div>
+    <span class="demo-badge">Fictional demo data</span>
+  </header>
+
+  <main class="shell">
+    <section class="intro">
+      <p class="eyebrow">DEMO PROJECT</p>
+      <h1>Customer Onboarding Research</h1>
+      <p class="lede">Explore fictional customer discovery research and ask questions against the evidence. This prototype is preloaded so anyone can try it immediately.</p>
+    </section>
+
+    <section class="panel research-panel" aria-labelledby="research-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">AVAILABLE EVIDENCE</p>
+          <h2 id="research-title">Sample research</h2>
+        </div>
+        <span id="research-count" class="count">Loading…</span>
+      </div>
+      <div id="research-list" class="research-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="ask-section" aria-labelledby="ask-title">
+      <p class="eyebrow">ASK THE RESEARCH</p>
+      <h2 id="ask-title">What would you like to understand?</h2>
+      <p class="helper">The AI should answer from the available discovery material—not from general knowledge.</p>
+
+      <form id="question-form" class="question-form">
+        <label for="question" class="sr-only">Question about customer research</label>
+        <textarea id="question" rows="3" placeholder="e.g. What made onboarding difficult for customers?" required></textarea>
+        <button id="ask-button" type="submit">Ask AI</button>
+      </form>
+
+      <div class="suggestions" aria-label="Suggested questions">
+        <span>Try:</span>
+        <button type="button" data-question="What made onboarding difficult for customers?">Onboarding difficulties</button>
+        <button type="button" data-question="What problems did customers have during setup?">Setup problems</button>
+        <button type="button" data-question="Were customers unclear about what to do next?">Unclear next steps</button>
+        <button type="button" data-question="What pricing concerns did customers report?">Pricing concerns</button>
+      </div>
+    </section>
+
+    <section id="result" class="result hidden" aria-live="polite"></section>
+  </main>
+
+  <footer>
+    <p>Prototype principle: <strong>AI output is not the evidence. The customer research is the evidence.</strong></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
