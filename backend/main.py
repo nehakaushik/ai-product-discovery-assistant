@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from backend.validator import validate_answer
+from backend.sample_data import discovery_data
 
 
 app = FastAPI()
@@ -12,10 +13,14 @@ class QuestionRequest(BaseModel):
     question: str
 
 
+@app.get("/demo-research")
+def get_demo_research():
+    return discovery_data
+
 @app.post("/questions")
 def ask_question(request: QuestionRequest):
     from backend.retrieval import retrieve_evidence
-    from backend.generator import generate_answer
+    from backend.generator import generate_answer    
 
     relevant_chunks = retrieve_evidence(
         request.question,
