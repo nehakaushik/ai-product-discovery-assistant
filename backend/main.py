@@ -1,8 +1,7 @@
-from backend.validator import validate_answer
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-from backend.retrieval import retrieve_evidence
-from backend.generator import generate_answer
+from backend.validator import validate_answer
 
 
 app = FastAPI()
@@ -15,6 +14,8 @@ class QuestionRequest(BaseModel):
 
 @app.post("/questions")
 def ask_question(request: QuestionRequest):
+    from backend.retrieval import retrieve_evidence
+    from backend.generator import generate_answer
 
     relevant_chunks = retrieve_evidence(
         request.question,
@@ -54,3 +55,4 @@ def ask_question(request: QuestionRequest):
         "answer": answer,
         "sources": relevant_chunks
     }
+app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
