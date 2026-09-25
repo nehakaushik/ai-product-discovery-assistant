@@ -25,7 +25,7 @@ with torch.no_grad():
 chunk_embeddings = chunk_output.last_hidden_state.mean(dim=1)
 
 
-def retrieve_evidence(question, top_k=2, relevance_threshold=0.30):
+def retrieve_evidence(question, top_k=3, relevance_threshold=0.25):
 
     encoded_question = tokenizer(
         question,

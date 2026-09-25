@@ -35,7 +35,7 @@ async function loadResearch() {
 function evidenceHtml(sources = []) {
   if (!sources.length) return '';
   return `
-    <h4 class="evidence-title">Supporting evidence</h4>
+    <h4 class="evidence-title">Relevant research</h4>
     <div>${sources.map(source => `
       <article class="evidence-card">
         <div class="evidence-meta">

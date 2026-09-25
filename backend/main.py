@@ -20,12 +20,11 @@ def get_demo_research():
 @app.post("/questions")
 def ask_question(request: QuestionRequest):
     from backend.retrieval import retrieve_evidence
-    from backend.generator import generate_answer    
+    from backend.generator import generate_answer  
 
     relevant_chunks = retrieve_evidence(
-        request.question,
-        top_k=2
-    )
+    request.question
+)
 
     # Guardrail 1:
     # Retrieval could not find sufficiently relevant evidence.
